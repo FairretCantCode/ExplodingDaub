@@ -19,29 +19,17 @@ public class ClientHandler implements Runnable {
 	public ClientHandler(Socket client) throws IOException {
 		this.client = client;
 		reader = new BufferedReader(new InputStreamReader(client.getInputStream()));
-		writer = new PrintWriter(new OutputStreamWriter(client.getOutputStream()));
+		writer = new PrintWriter(new OutputStreamWriter(client.getOutputStream()), true);
 	}
+	
 	@Override
 	public void run() {
-		while (true) {
-			String msgFromClient;
-			try {
-				msgFromClient = reader.readLine();
-				System.out.println("Client: " + msgFromClient);
-				writer.write("Your message has been recieved");
-				writer.flush();
-				
-				if (msgFromClient.equalsIgnoreCase("BYE")) {
-					break;
-				}
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-			
-		}
 		
+		
+	}
+	public String askForName() throws IOException {
+		writer.write("What is your name?");
+		return reader.readLine();
 	}
 
 }

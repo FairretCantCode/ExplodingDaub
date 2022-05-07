@@ -1,20 +1,26 @@
 package gameCode;
-import java.util.*;
+
+import serverCode.*;
+import java.util.ArrayList;
+
 public class Player{
 
   private ArrayList<Card> hand;
   private String name;
+  private ClientHandler handler;
   
-  public Player(String n){
+  public Player(String n, ClientHandler c){
     name = n;
+    handler = c;
   }
+
 
   public String getName(){
     return name;
   }
 
   public void addCard(Card c){
-    //Mehtod gives the player a card
+    //Method gives the player a card
     if (c != null){
       hand.add(c);  
     }

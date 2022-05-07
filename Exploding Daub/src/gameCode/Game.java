@@ -1,20 +1,24 @@
 package gameCode;
+
+import java.util.ArrayList;
+
 public class Game{
 
   private int currentPlayerIndex;
-  private Player[] players;
+  private ArrayList<Player> players;
   private Deck deck;
   private CardStack stack;
   
-  public Game(Player[] p, int s, Deck d){
+  public Game(ArrayList<Player> p){
     players = p;
-    currentPlayerIndex = s;
-    deck = d;
+    currentPlayerIndex = 0;
+    deck = new Deck(p.size()-1);
     stack = new CardStack(this);
   }
   
   public void startGame(){
-    deck.shuffle();
+	    deck.populate();
+	  deck.shuffle();
     for (Player p : players){
       p.addCard(new Card("Defuse"));
       
@@ -33,24 +37,26 @@ public class Game{
   }
 
   public Player getRandomPlayer(){
-    int ran = (int) (Math.random() * players.length);
-    return players[ran];
+    int ran = (int) (Math.random() * players.size());
+    return players.get(ran);
   }
+  
   public Player getCurrentPlayer(){
-    return players[currentPlayerIndex];
+    return players.get(currentPlayerIndex);
   }
+  
   public void setCurrentPlayer(Player p){
-    for (int i = 0; i < players.length; i++){
-      if (players[i] == p){
-        currentPlayerIndex = i;
-      }
+    int index = players.indexOf(p);
+    if (index >= 0) {
+    	currentPlayerIndex = index;
     }
   }
+  
   public void shuffle(){
     deck.shuffle();
   }
   public void skip(){
-    //Dumb way of skippig someone. Instead of drawing a card, we make the top row a null.
+    //Dumb way of skipping someone. Instead of drawing a card, we make the top row a null.
     deck.addCard(null);
 }
   public Card[] seeFuture(){
@@ -63,7 +69,7 @@ public class Game{
   }
   public void GameLoop(){
     startGame();
-    while (players.length > 1){
+    while (players.size() > 1){
       
 
       
