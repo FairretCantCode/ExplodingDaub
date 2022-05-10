@@ -12,6 +12,7 @@ public class Player{
   public Player(String n, ClientHandler c){
     name = n;
     handler = c;
+    hand = new ArrayList<Card>();
   }
 
 
@@ -32,5 +33,19 @@ public class Player{
     }catch (ArrayIndexOutOfBoundsException e){
       System.out.println("Player does not have the card");
     }
+  }
+  
+  public Card playCard() {
+	  String cardName = handler.askForCard();
+	  for (Card c:this.hand) {
+		  if (c.getName().equals(cardName)) {
+			  return c;
+		  }
+	  }
+	  return null;
+  }
+  
+  public void showCard(Card c) {
+	  handler.sendShownCard(c.getName());
   }
 }
